@@ -12,4 +12,5 @@ pip install pillow
 ![Image of Lenna](https://github.com/McJazzy/hexagonpy/blob/master/Lenna.png)
 ![Image of Lenna using hexagon tiles](https://github.com/McJazzy/hexagonpy/blob/master/Lenna_Processed.png)
 
-
+![Image of Sunflower](https://github.com/McJazzy/hexagonpy/blob/master/A_sunflower.jpg)
+![Image of a sunflower using hexagon tiles](https://github.com/McJazzy/hexagonpy/blob/master/A_Sunflower_Processed.png)
