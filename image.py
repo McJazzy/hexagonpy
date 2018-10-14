@@ -18,7 +18,7 @@ def hexagon_corners(center,size):
         (x - w / 2, y + h/4)
     ]
 
-def rectangle_corners(center, width, height):
+def rectangle_corners(center, w, h):
     x = center[0]
     y = center[1]
 
@@ -29,36 +29,43 @@ def rectangle_corners(center, width, height):
         (x -w /2, y + h/2)
     ]
 
-im = Image.open('Mona_Lisa.jpg')
-I = np.asarray(im)
-draw = ImageDraw.Draw(im)
 
-hexagon_size = 30
-w = math.sqrt(3) * hexagon_size
-h = 2 * hexagon_size
-
-#numer of hexagons horizontally and vertically
-num_hor = int(im.size[0] / w) + 2
-num_ver = int(im.size[1] / h * 4 / 3) + 2
-
-for i in range(0,num_hor*num_ver): 
-    column = i % num_hor
-    row = i // num_hor
-    even = row % 2  # the even rows of hexagons has w/2 offset on the x-axis compared to odd rows.    
+def hexagonify(path, hexagon_size):
+    im = Image.open(path)
+    I = np.asarray(im)
+    draw = ImageDraw.Draw(im)
     
-    p = hexagon_corners((column*w + even * w/2,row*h * 3/4), hexagon_size)
+    w = math.sqrt(3) * hexagon_size
+    h = 2 * hexagon_size
 
-    # compute the average color of the hexagon, use a rectangle approximation.
-    raw = rectangle_corners((column*w + even * w/2, row*h * 3/4), w, h)
-    r = []
-    for points in raw:
-        np0 = int(np.clip(points[0], 0, im.size[0]))
-        np1 = int(np.clip(points[1], 0, im.size[1]))
-        r.append((np0,np1))    
-    
-    color = np.average(I[r[0][1]:r[3][1],r[0][0]:r[1][0]], axis=(0,1))    
-    color = tuple(color.astype(int))    
+    #numer of hexagons horizontally and vertically
+    num_hor = int(im.size[0] / w) + 2
+    num_ver = int(im.size[1] / h * 4 / 3) + 2
 
-    draw.polygon(p, fill=color)
+    for i in range(0,num_hor*num_ver): 
+        column = i % num_hor
+        row = i // num_hor
+        even = row % 2  # the even rows of hexagons has w/2 offset on the x-axis compared to odd rows.    
+        
+        p = hexagon_corners((column*w + even * w/2,row*h * 3/4), hexagon_size)
 
-im.show()
+        # compute the average color of the hexagon, use a rectangle approximation.
+        raw = rectangle_corners((column*w + even * w/2, row*h * 3/4), w, h)
+        r = []
+        for points in raw:
+            np0 = int(np.clip(points[0], 0, im.size[0]))
+            np1 = int(np.clip(points[1], 0, im.size[1]))
+            r.append((np0,np1))    
+        
+        color = np.average(I[r[0][1]:r[3][1],r[0][0]:r[1][0]], axis=(0,1))    
+        color = tuple(color.astype(int))    
+
+        draw.polygon(p, fill=color)
+    return im
+
+
+if __name__ == "__main__":
+    im = hexagonify('Lenna.png', 2)
+    im.show()
+
+
