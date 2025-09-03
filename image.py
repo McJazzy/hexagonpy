@@ -1,6 +1,7 @@
 from PIL import Image,ImageDraw
 import numpy as np
 import math
+import sys
 
 def hexagon_corners(center,size):    
     x = center[0]
@@ -65,7 +66,7 @@ def hexagonify(path, hexagon_size):
 
 
 if __name__ == "__main__":
-    im = hexagonify('Lenna.png', 2)
+    im = hexagonify(sys.argv[1], int(sys.argv[2]))
     im.show()
 
 

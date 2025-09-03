@@ -8,7 +8,17 @@ pip install numpy
 pip install pillow
 ```
 
+
+# Usage
+
+```bash
+python image.py Lenna.png 5
+python image.py A_sunflower.jpg 20
+```
+
+
 # Examples
+
 ![Image of Lenna](https://github.com/McJazzy/hexagonpy/blob/master/Lenna.png)
 ![Image of Lenna using hexagon tiles](https://github.com/McJazzy/hexagonpy/blob/master/Lenna_Processed.png)
 
